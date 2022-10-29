@@ -43,6 +43,13 @@ async function run() {
       const food = await cursor.toArray();
       res.send(food);
     });
+    // get a specific food 
+    app.get('/allFood/:id', async (req, res) =>{
+      const id = req.params.id;
+      const query = {_id:ObjectId(id)}
+      const result = await foodsCollection.findOne(query);
+      res.send(food)
+    })
     //delete a food item
     app.delete("/allFood/:id", async(req, res) => {
       const id = req.params.id;
