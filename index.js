@@ -48,7 +48,28 @@ async function run() {
       const id = req.params.id;
       const query = {_id:ObjectId(id)}
       const result = await foodsCollection.findOne(query);
-      res.send(food)
+      res.send(result)
+    })
+    //update a food item
+    app.put('/allFood/:id', async (req, res) =>{
+      const id = req.params.id;
+      const updateFood = req.body;
+      const filter ={_id:ObjectId(id)}
+      const options = {upsert:true}
+      const updateDoc = {
+        $set: {
+          name: updateFood.name,
+          type: updateFood.type,
+          weight: updateFood.weight,
+          img: updateFood.img,
+          price: updateFood.price,
+          description: updateFood.description
+
+        }
+      }
+      const result = await foodsCollection.updateOne(filter, updateDoc, options)
+      res.send(result)
+      
     })
     //delete a food item
     app.delete("/allFood/:id", async(req, res) => {
