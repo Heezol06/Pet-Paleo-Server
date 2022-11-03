@@ -78,6 +78,13 @@ async function run() {
       const result = await foodsCollection.deleteOne(query)
       res.send(result)
     })
+    //payment route get single product
+    app.get("/payment/:id", async (req, res) =>{
+      const id = req.params.id;
+      const query = {_id:ObjectId(id)}
+      const result = await foodsCollection.findOne(query)
+      res.send(result)
+    })
   } finally {
     // await client.close();
   }
