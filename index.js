@@ -90,34 +90,16 @@ async function run() {
     app.post("/addToCart/:id", async(req, res)=>{
       const id = req.params.id;
       const filter = {_id:ObjectId(id)}
-      console.log(filter);
+      // console.log(filter);
       const result = await addToCartCollection.insertOne(filter);
       res.send(result)
     })
-    // const exists = await addToCartCollection.findOne(filter)
-    // if (exists) {
-    //   return res.send({success: false, id:exists})
-    // }
-    // else{const result= addToCartCollection.insertOne(id)
-    // res.send(id.success, result)}
-  //   app.post('/cartProduct', async (req, res)=>{
-  //     const product=req.body;
-  //     console.log(product);
-  //     const query = {products: product.bookName}
-  //     console.log(query);
-  //     const exists = await AddToCartCollection.findOne(query);
-  //     if(exists){
-  //         return res.send({success: false, product:exists})
-  //     }
-  //     const result= await AddToCartCollection.insertOne(product)
-  //     res.send(product.success, result)
-  // })
-  // app.get('/cartProduct', async (req, res) => {
-  //     const query = {};
-  //     const cursor =  AddToCartCollection.find(query);
-  //     const books = await cursor.toArray();
-  //     res.send(books)
-  // })
+    app.get("/addToCart", async(req, res) =>{
+      const query = {};
+      const cursor = addToCartCollection.find(query);
+      const cart = await cursor.toArray();
+      res.send(cart)
+    })
   } finally {
     // await client.close();
   }
